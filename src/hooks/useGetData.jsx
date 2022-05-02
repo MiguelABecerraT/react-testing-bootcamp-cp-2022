@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
+import { renderHook } from '@testing-library/react-hooks'
 
 export const useGetData = () => {
   const [date, setDate] = useState(new Date());
@@ -27,6 +28,7 @@ export const useGetData = () => {
       const { data } = await axios.get(url);
       setPictureData(data);
       setErrors(false);
+
     } catch (e) {
       if (e.response.data.msg) setErrors(e.response.data.msg);
       else setErrors(true);

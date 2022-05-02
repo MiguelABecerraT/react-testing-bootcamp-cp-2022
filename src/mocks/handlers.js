@@ -2,6 +2,17 @@ import { rest } from "msw";
 
 export const handlers = [
   rest.get("https://api.nasa.gov/planetary/apod", (req, res, ctx) => {
+    const date = req.url.searchParams.get("date");
+    if (date === "1995-6-1")
+      return res(
+        ctx.status(400),
+        ctx.json({
+          code: 400,
+          msg: "Date must be between Jun 16, 1995 and May 01, 2022.",
+          service_version: "v1",
+        })
+      );
+
     return res(
       ctx.status(200),
       ctx.json({
